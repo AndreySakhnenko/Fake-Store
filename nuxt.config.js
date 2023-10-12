@@ -10,7 +10,7 @@ export default {
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'my-project',
+    title: 'Fake-Store',
     htmlAttrs: {
       lang: 'en'
     },

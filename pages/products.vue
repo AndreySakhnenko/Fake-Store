@@ -36,8 +36,6 @@ export default {
   async created() {
     await this.makeRequest(); 
     await this.categori();
-    await this.test();
-    await this.test2();
   },
   methods: {
     async makeRequest() {
@@ -56,54 +54,6 @@ export default {
         console.log('Categories:', this.categories);
       } catch (error) {
         console.error('Error fetching categories:', error);
-      }
-    },
-    async test(){
-          
-      const options = {
-        method: 'GET',
-        url: 'https://text-similarity-calculator.p.rapidapi.com/stringcalculator.php',
-        params: {
-          ftext: ' один два три чотири',
-          stext: 'шість сім вісам девять один'
-        },
-        headers: {
-          'X-RapidAPI-Key': '5c15f9602dmshee78acc159c51b6p138180jsn968e3255fb1a',
-          'X-RapidAPI-Host': 'text-similarity-calculator.p.rapidapi.com'
-        }
-      };
-
-      try {
-        const response = await axios.request(options);
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    async test2(){
-
-      const encodedParams = new URLSearchParams();
-      encodedParams.set('q', 'Hello, world!');
-      encodedParams.set('target', 'uk');
-      encodedParams.set('source', 'en');
-
-      const options = {
-        method: 'POST',
-        url: 'https://google-translate1.p.rapidapi.com/language/translate/v2',
-        headers: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Accept-Encoding': 'application/gzip',
-          'X-RapidAPI-Key': '5c15f9602dmshee78acc159c51b6p138180jsn968e3255fb1a',
-          'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com'
-        },
-        data: encodedParams,
-      };
-
-      try {
-        const response = await axios.request(options);
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
       }
     },
   }

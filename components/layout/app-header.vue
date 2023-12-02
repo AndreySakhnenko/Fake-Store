@@ -1,161 +1,229 @@
 <template>
-  <div class="header">
-    <ul class="locales_list">
-      <li v-for="(locale, index) in locales" :key="index">
-        <a
-          class="locales_link"
-          :class="{ active: locale.lang === activeLocale }"
-          @click="switchLocale(locale.lang)"
-        >
-          {{ $t(locale.name) }}
-        </a>
-      </li>
-    </ul>
+  <div class="bg-white">
+    <!-- Mobile menu -->
+
+    <header class="relative bg-white">
+      <p
+        class="flex h-10 items-center justify-center bg-indigo-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8"
+      >
+        Get free delivery on orders over $100
+      </p>
+
+      <nav aria-label="Top" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="border-b border-gray-200">
+          <div class="flex h-16 items-center">
+            <button
+              type="button"
+              class="relative rounded-md bg-white p-2 text-gray-400 lg:hidden"
+              @click="open = true"
+            >
+              <span class="absolute -inset-0.5" />
+              <span class="sr-only">Open menu</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                />
+              </svg>
+
+              <Bars3Icon class="h-6 w-6" aria-hidden="true" />
+            </button>
+
+            <!-- Logo -->
+            <div class="ml-4 flex lg:ml-0">
+              <a href="#">
+                <span class="sr-only">Your Company</span>
+                <img
+                  class="h-8 w-auto"
+                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                  alt=""
+                />
+              </a>
+            </div>
+
+            <!-- Flyout menus -->
+            <div class="hidden lg:ml-8 lg:block lg:self-stretch">
+              <div class="flex h-full space-x-8">
+                <Popover
+                  v-for="category in navigation.categories"
+                  :key="category.name"
+                  class="flex"
+                  v-slot="{ open }"
+                >
+                  <div class="relative flex">
+                    <PopoverButton
+                      :class="[
+                        open
+                          ? 'border-indigo-600 text-indigo-600'
+                          : 'border-transparent text-gray-700 hover:text-gray-800',
+                        'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out',
+                      ]"
+                      >{{ category.name }}</PopoverButton
+                    >
+                  </div>
+
+                  <transition
+                    enter-active-class="transition ease-out duration-200"
+                    enter-from-class="opacity-0"
+                    enter-to-class="opacity-100"
+                    leave-active-class="transition ease-in duration-150"
+                    leave-from-class="opacity-100"
+                    leave-to-class="opacity-0"
+                  >
+                    <PopoverPanel
+                      class="absolute inset-x-0 top-full text-sm text-gray-500"
+                    >
+                      <!-- Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow -->
+                      <div
+                        class="absolute inset-0 top-1/2 bg-white shadow"
+                        aria-hidden="true"
+                      />
+
+                      <div class="relative bg-white">
+                        <div class="mx-auto max-w-7xl px-8">
+                          <div class="grid grid-cols-2 gap-x-8 gap-y-10 py-16">
+                            <div class="col-start-2 grid grid-cols-2 gap-x-8">
+                              <div
+                                v-for="item in category.featured"
+                                :key="item.name"
+                                class="group relative text-base sm:text-sm"
+                              >
+                                <div
+                                  class="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75"
+                                >
+                                  <img
+                                    :src="item.imageSrc"
+                                    :alt="item.imageAlt"
+                                    class="object-cover object-center"
+                                  />
+                                </div>
+                                <a
+                                  :href="item.href"
+                                  class="mt-6 block font-medium text-gray-900"
+                                >
+                                  <span
+                                    class="absolute inset-0 z-10"
+                                    aria-hidden="true"
+                                  />
+                                  {{ item.name }}
+                                </a>
+                                <p aria-hidden="true" class="mt-1">Shop now</p>
+                              </div>
+                            </div>
+                            <div
+                              class="row-start-1 grid grid-cols-3 gap-x-8 gap-y-10 text-sm"
+                            >
+                              <div
+                                v-for="section in category.sections"
+                                :key="section.name"
+                              >
+                                <p
+                                  :id="`${section.name}-heading`"
+                                  class="font-medium text-gray-900"
+                                >
+                                  {{ section.name }}
+                                </p>
+                                <ul
+                                  role="list"
+                                  :aria-labelledby="`${section.name}-heading`"
+                                  class="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
+                                >
+                                  <li
+                                    v-for="item in section.items"
+                                    :key="item.name"
+                                    class="flex"
+                                  >
+                                    <a
+                                      :href="item.href"
+                                      class="hover:text-gray-800"
+                                      >{{ item.name }}</a
+                                    >
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </PopoverPanel>
+                  </transition>
+                </Popover>
+
+                <NuxtLink
+                  v-for="page in navigation.pages"
+                  :key="page.name"
+                  :to="page.href"
+                  :router="{ transition: 'your-transition-name' }"
+                  class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                >
+                  {{ page.name }}
+                </NuxtLink>
+              </div>
+            </div>
+
+            <div class="ml-auto flex items-center">
+              <div
+                class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6"
+              >
+                <a
+                  href="#"
+                  class="text-sm font-medium text-gray-700 hover:text-gray-800"
+                  >Sign in</a
+                >
+                <span class="h-6 w-px bg-gray-200" aria-hidden="true" />
+                <a
+                  href="#"
+                  class="text-sm font-medium text-gray-700 hover:text-gray-800"
+                  >Create account</a
+                >
+              </div>
+
+              <div class="hidden lg:ml-8 lg:flex">
+                <a
+                  href="#"
+                  class="flex items-center text-gray-700 hover:text-gray-800"
+                >
+                  <img
+                    src="https://tailwindui.com/img/flags/flag-canada.svg"
+                    alt=""
+                    class="block h-auto w-5 flex-shrink-0"
+                  />
+                  <span class="ml-3 block text-sm font-medium">CAD</span>
+                  <span class="sr-only">, change currency</span>
+                </a>
+              </div>
+
+              <!-- Search -->
+              <Search />
+
+              <!-- Cart -->
+              <Cart />
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
   </div>
 </template>
-<script lang="ts">
-import { Header } from "../../types/header";
-import Vue from "vue";
-export default Vue.extend({
-  data(): Header {
-    return {
-      locales: [
-        { name: "locales.en", lang: "en" },
-        { name: "locales.ua", lang: "ua" },
-        { name: "locales.ru", lang: "ru" },
-      ],
-      activeLocale: "ru",
-      currentMonth: "",
-      currentDay: "",
-      currentYear: "",
-      currentTime: "",
-      currentDayOfWeek: "",
-    };
-  },
-  mounted() {
-    if (process.client) {
-      const selectedLanguage = localStorage.getItem("selectedLanguage");
 
-      if (selectedLanguage) {
-        this.$i18n.locale = selectedLanguage;
-        this.activeLocale = selectedLanguage;
-      }
-    }
-    this.updateDateTime();
-  },
-  methods: {
-    switchLocale(locale: string) {
-      document.body.classList.add("lang-changing");
-      this.$i18n.locale = locale;
-      setTimeout(() => {
-        document.body.classList.remove("lang-changing");
-      }, 1000);
-      this.activeLocale = locale;
-      localStorage.setItem("selectedLanguage", locale);
-    },
-    updateDateTime() {
-      const now = new Date();
-      this.currentDayOfWeek = now.toLocaleString("default", {
-        weekday: "long",
-      });
-      this.currentMonth = now.toLocaleString("default", { month: "long" });
-      this.currentDay = now.getDate();
-      this.currentYear = now.getFullYear();
-      this.currentTime = now.toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-    },
-  },
-});
+<script setup>
+import { ref } from "vue";
+import Search from "@/components/common/app-search.vue";
+import Cart from "@/components/common/app-cart.vue";
+const navigation = {
+  pages: [
+    { name: "Company", href: "/products" },
+    { name: "Stores", href: "/" },
+  ],
+};
+
+const open = ref(false);
 </script>
-<style>
-.lang-changing {
-  transition: all 1s ease;
-  opacity: 1;
-}
-
-.lang-changing:not(.active) {
-  opacity: 0;
-}
-.header {
-  background: #ffffff;
-  box-shadow: 0px 4px 10px rgba(196, 196, 196, 0.25);
-}
-.navbar-container {
-  justify-content: space-between;
-  padding-left: 15%;
-  padding-right: 20px;
-  width: 100%;
-}
-.navbar_logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.navbar_logo__link {
-  font-weight: 500;
-}
-.header_input__search {
-  background: #e3e3e3;
-  font-weight: 600;
-  max-width: 250px;
-  width: 100%;
-  color: #000;
-}
-.header_input__search::placeholder {
-  font-weight: 600;
-  color: #000;
-}
-.header_lang {
-  list-style-type: none;
-}
-
-.locales_list {
-  display: flex;
-  align-items: center;
-}
-.locales_list > *:not(:last-child)::after {
-  content: "/";
-  display: inline-block;
-  color: #111111;
-  margin: 0 5px;
-}
-
-.locales_link {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 20px;
-  color: #111111;
-  cursor: pointer;
-  transition: all 0.3s ease-in;
-}
-.locales_link.active {
-  color: #2e6fce;
-  font-weight: 500;
-}
-.header_data {
-  font-size: 12px;
-  display: flex;
-  flex-direction: column;
-}
-.header_data__day {
-  text-transform: capitalize;
-}
-.header_data__block {
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-.header_data__time {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-@media screen and (max-width: 989px) {
-  .navbar-container {
-    padding-left: 20%;
-  }
-}
-</style>

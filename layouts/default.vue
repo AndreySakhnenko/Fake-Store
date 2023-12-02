@@ -11,7 +11,6 @@
         </transition>
       </template>
       <template v-else>
-        <Navbar />
         <transition name="fade" mode="out-in">
           <div class="content_pages">
             <Nuxt />

@@ -8,6 +8,17 @@ export default {
     hort: "0.0.0.0",
     port: 3200, 
   },
+
+
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: 'product',
+        path: '/product/:id',
+        component: resolve(__dirname, 'pages/products/_id.vue')
+      });
+    }
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Fake-Store',
@@ -37,7 +48,6 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
   ],
-
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
@@ -51,7 +61,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    '@nuxtjs/i18n'
+    '@nuxtjs/i18n',  
     ],
 
   i18n: {

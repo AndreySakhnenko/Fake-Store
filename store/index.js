@@ -1,39 +1,39 @@
 // store/index.js
+// import Vuex from 'vuex';
 
-import Vue from 'vue';
-import Vuex from 'vuex';
+// const createStore = () => {
+//   return new Vuex.Store({
+//     state: {
+//       selectedCategory: null,
+//     },
+//     mutations: {
+//       setCategory(state, category) {
+//         state.selectedCategory = category;
+//       },
+//     },
+//   });
+// };
 
-Vue.use(Vuex);
+// export default createStore;
 
-export const state = () => ({
-  siteName: 'The best Company',
-});
+export const state  = () => ({
+  siteName: 'The best Company'
+})
 
 export const mutations = {
-  setSiteName(state) {
+  setSiteName(state){
     //some code
-  },
-};
+  }
+}
 
 export const getters = {
-  getSiteName(state) {
-    return state.siteName;
-  },
-};
+  getSiteName(store) {
+    return store.siteName
+  }
+}
 
 export const actions = {
   changeSiteName() {
-    //some code
-  },
-};
 
-const createStore = () => {
-  return new Vuex.Store({
-    state,
-    mutations,
-    getters,
-    actions,
-  });
-};
-
-export default createStore;
+  }
+}

@@ -9,6 +9,7 @@
     <p class="bg-gradient-to-r from-indigo-500">Rating: {{ product.rating.rate }}</p>
     <p>ID: {{ product.id }}</p>
     <button @click="addToCart">Добавити в корзину</button>
+
   </div>
 </template>
 

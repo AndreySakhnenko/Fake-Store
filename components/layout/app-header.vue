@@ -1,14 +1,13 @@
 <template>
-  <div class="bg-white">
+  <div class="bg-[#3B404A]">
     <!-- Mobile menu -->
 
     <header class="relative bg-white">
       <p
-        class="flex h-10 items-center justify-center bg-indigo-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8"
+        class="flex h-10 items-center justify-center bg-primary px-4 text-sm font-medium text-white sm:px-6 lg:px-8"
       >
         Get free delivery on orders over $100
       </p>
-
       <nav aria-label="Top" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="border-b border-gray-200">
           <div class="flex h-16 items-center">
@@ -25,7 +24,7 @@
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-6 h-6"
+                class="w-6 h-6 "
               >
                 <path
                   stroke-linecap="round"
@@ -48,7 +47,8 @@
                 />
               </a>
             </div>
-
+            <div>
+            </div>
             <!-- Flyout menus -->
             <div class="hidden lg:ml-8 lg:block lg:self-stretch">
               <div class="flex h-full space-x-8">

@@ -1,13 +1,17 @@
 <template>
   <div>
-     <!-- <Preloader v-if="loading" /> -->
+    <!-- <Preloader v-if="loading" /> -->
     <Header />
     <div class="wrapper">
       <template v-if="isHomePage">
         <transition name="fade" mode="out-in">
+          <!-- <div class="flex gap-5"> -->
+
+          <!-- <Sidebar /> -->
           <div class="content_pages content_home__page">
             <Nuxt />
           </div>
+          <!-- </div> -->
         </transition>
       </template>
       <template v-else>
@@ -21,27 +25,14 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup>
 import Header from "@/components/layout/app-header.vue";
-import Vue from "vue";
-export default Vue.extend({
-  components: {
-    Header,
-  },
-  data(){
-    return{
-      loading: true as boolean,
-    }
-  },
-  mounted() {
-    this.loading = false;
-  },
-  computed: {
-    isHomePage() {
-       return this.$route.path === '/';
-    },
-  },
-});
+import Sidebar from "@/components/sidebar/app-sidebar.vue";
+import { ref } from "vue";
+
+const loading = ref(true);
+
+const isHomePage = () => this.$route.path === "/";
 </script>
 
 <style scoped>
